@@ -15,7 +15,7 @@
 		border:0px red solid;
 	}
 	
-   #submitBtn, #joinBtn{
+   #submitBtn, #resetBtn{
       background-color: white;
       border: 1px solid black;
       margin:20px 5px;
@@ -38,15 +38,18 @@
 </head>
 <body>
 	<div id="box">
-		<h2>로그인</h2>
+		<h2>◎ 회원가입</h2>
 		<form name="loginForm">			
 			<div id="loginBox">
 					<div class="labelB"><label for="id">아이디*</label></div>
 					<div class="inputB"><input type="text" name="id"/></div>		
 					<div class="labelB"><label for="pwd">비밀번호</label></div>
-					<div class="inputB"><input type="password" name="pwd"/></div>		
-					<input type="submit" id="submitBtn" value="로그인"/>	
-					<input type="button" id="joinBtn" value="회원가입"/>
+					<div class="inputB"><input type="password" name="pwd"/></div>
+					<div class="labelB"><label for="pwdCk">비밀번호 확인</label></div>
+					<div class="inputB"><input type="password" name="pwdCk"/></div>
+					<div class="labelB"><label for="email">이메일</label></div>
+					<div class="inputB"><input type="text" name="email"/></div>			
+					<input type="submit" id="submitBtn" value="가입"/> <input type="reset" id="resetBtn" value="취소"/>					
 			</div>
 		</form>
 	</div>
