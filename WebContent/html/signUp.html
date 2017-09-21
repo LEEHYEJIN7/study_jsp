@@ -16,23 +16,37 @@
 	}
 	
    #submitBtn, #resetBtn{
-      background-color: white;
-      border: 1px solid black;
-      margin:20px 5px;
-      display: block;      
-      float:left;
+    background-color: white;
+    border: 1px solid black;
+    margin:20px 5px;
+    display: block;      
+    float:left;
    }
    	
 	.labelB {
-		width:30%; float:left;
-		border:0px black solid;
+		width:28%; float:left;
+		line-height:30px;
+		height:30px;
+		padding-left:5px;
+		border-top:1px #cccccc solid;
+		border-left:1px #cccccc solid;
 		display:inline;
 	}
 	
 	.inputB {
-		width:70%;
+		width:65%; height:30px;
+		line-height:30px;
+		border:1px #cccccc solid;
+		border-bottom:0px #cccccc solid;
+		padding-left:5px;
+		display:inline-block;
+	}
+	
+	.btnB{
 		border:0px black solid;
-		display:inline;
+		overflow:hidden;
+		width:145px;
+		margin: 0px auto;
 	}
 </style>
 </head>
@@ -47,9 +61,11 @@
 					<div class="inputB"><input type="password" name="pwd"/></div>
 					<div class="labelB"><label for="pwdCk">비밀번호 확인</label></div>
 					<div class="inputB"><input type="password" name="pwdCk"/></div>
-					<div class="labelB"><label for="email">이메일</label></div>
-					<div class="inputB"><input type="text" name="email"/></div>			
-					<input type="submit" id="submitBtn" value="가입"/> <input type="reset" id="resetBtn" value="취소"/>					
+					<div class="labelB" style="border-bottom:1px #cccccc solid;"><label for="email">이메일</label></div>
+					<div class="inputB" style="border-bottom:1px #cccccc solid;"><input type="text" name="email"/></div>			
+					<div class="btnB">
+						<input type="submit" id="submitBtn" value="가입"/> <input type="reset" id="resetBtn" value="취소"/>					
+					</div>
 			</div>
 		</form>
 	</div>
