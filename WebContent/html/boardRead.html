@@ -22,13 +22,10 @@
 		border: 1px solid #cccccc;
 	}
 	
-	input[type="text"], textarea{
-		width:100%;
-	}
-	
 	.btns{
 		text-align:center; margin-top: 15px;
 	}
+	
 </style>
 </head>
 <body>
@@ -39,20 +36,30 @@
 				<colgroup>
 					<col width="150px"/>
 					<col width="*"/>
-				</colgroup>				
+					<col width="150px"/>
+					<col width="*"/>
+				</colgroup>
+				
 				<tr>
-					<th>제목*</th>
-					<td><input type="text" name="title"/></td>
-				</tr>				
+					<th>작성자</th>
+					<td>홍길동</td>
+					<th>작성일</th>
+					<td>2017. 09. 13</td>
+				</tr>
+				
+				<tr>
+					<th>제목</th>
+					<td colspan="3" style="text-align: left;">게시판 목록을 작성하자</td>
+				</tr>
+				
 				<tr>
 					<th>내용</th>
-					<td><textarea name="content" style="height:300px"></textarea></td>
+					<td colspan="3" style="text-align: left; height: 300px; vertical-align: top;">게시판 상세를 입력</td>
 				</tr>
 			</table>
 			
 			<div class="btns">
-				<input type="submit" value="저장"/>
-				<input type="reset" value="취소"/>
+				<input type="button" value="뒤로"/>
 			</div>
 		</form>
 	</div>
