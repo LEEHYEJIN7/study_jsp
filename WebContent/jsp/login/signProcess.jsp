@@ -155,7 +155,7 @@
 		}else{   // 로그인
 			int loginCheck=signIn(userId, userPw);
 			if(loginCheck==0){
-				msg="등록된 회원이 아닙니다.";
+				msg="아이디와 비밀번호를 확인해주세요.";
 				url="signIn.jsp";
 			}else{
 				request.setAttribute("user_id", userId);

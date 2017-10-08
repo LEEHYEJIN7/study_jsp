@@ -107,7 +107,7 @@
 					<div class="labelB" style="border-bottom:1px #cccccc solid;"><label for="email">이메일*</label></div>
 					<div class="inputB" style="border-bottom:1px #cccccc solid;"><input type="text" name="email"/></div>			
 					<div class="btnB">
-						<input type="submit" id="submitBtn" value="가입"/> <input type="reset" id="resetBtn" value="취소"/>					
+						<input type="submit" id="submitBtn" value="가입"/> <input type="reset" id="resetBtn" value="취소" onclick="javascript:location.href='signIn.jsp'"/>					
 					</div>
 			</div>
 		</form>
