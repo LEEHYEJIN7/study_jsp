@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.sql.Connection" %>
+<%@ page import="java.sql.DriverManager" %>
+<%@ page import="java.sql.PreparedStatement"%>
+<%@ page import="java.sql.ResultSet"%>
+<%@ page import="java.sql.SQLException"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -57,6 +62,20 @@
 		border:1px solid black;
 	}
 </style>
+<%
+	String url="jdbc:oracle:thin:@220.76.203.39:1521:UCS";
+	String id="UCS_STUDY";
+	String pw="qazxsw";
+
+	Class.forName("oracle.jdbc.driver.OracleDriver");
+	
+	Connection conn=DriverManager.getConnection(url, id, pw);
+	
+	String sql = "SELECT * FROM BOARD ORDER BY seq DESC";
+	PreparedStatement pstmt=conn.prepareStatement(sql);
+	ResultSet rs = pstmt.executeQuery();
+	
+%>
 </head>
 <body>
 	<div id="box">
@@ -79,7 +98,15 @@
 					<input type="submit" id="submitBtn" value="검색"/>
 			</form>
 		</div>
+		<%
+		while(rs.next()){
+
+			int seq= rs.getInt("seq");
+			String title = rs.getString("title");
+			String mod_id = rs.getString("mod_id");
+			String mod_date = rs.getString("mod_date");
 		
+		%>
 		<div class="list">
 			<table>
 				<colgroup>
@@ -95,32 +122,16 @@
 					<th>작성일</th>
 				</tr>
 				<tr>
-					<td>1</td>
-					<td>게시판 목록을 작성하자</td>
-					<td>홍길동</td>
-					<td>2017. 09. 13</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
+					<td><%=seq %></td>
+					<td><%=title %></td>
+					<td><%=mod_id %></td>
+					<td><%=mod_date %></td>
+				</tr>				
 			</table>
 		</div>
-		
+		<%
+		}
+		%>
 		<div class="page">
 			<a href="#" class="paging"> << </a>
 			<a href="#" class="paging"> < </a>
