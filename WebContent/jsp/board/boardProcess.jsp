@@ -57,4 +57,54 @@
 		}
 	}
 	
+	//게시물 등록	
+	public int insertText(String title, String userId, String content){
+		Connection conn=this.getConnection();
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int check=0;
+		try{
+			String sql="Insert into board values((select max(seq)+1 from board), ?, ?, ?, sysdate, ?, sysdate)";
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, title);
+			pstmt.setString(2, content);
+			pstmt.setString(3, userId);
+			pstmt.setString(4, userId);
+			
+			check=pstmt.executeUpdate();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			this.close(pstmt);
+			this.close(conn);
+		}
+		
+		return check;
+	}
+	
 %>
+<script>
+
+<%
+	request.setCharacterEncoding("UTF-8");
+	String title=request.getParameter("title");
+	String userId=(String)session.getAttribute("user_id");
+	String content=request.getParameter("content");
+	
+	int check=insertText(title, userId, content);
+	
+	if(check>0){
+		%>
+		alert("글 등록 성공");
+		location.href="boardList.jsp";
+	<%
+	}else{
+	%>
+		alert("글 등록 실패");
+	<%
+	}
+%>
+
+
+
+</script>

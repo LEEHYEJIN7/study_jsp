@@ -32,11 +32,21 @@
 		text-align:center; margin-top: 15px;
 	}
 </style>
+
+<script>
+	function writeCheck(){
+		if(boardForm.title.value==""){
+			alert("제목을 입력해주세요.");
+			boardForm.title.focus();
+			return false;
+		}
+	}
+</script>
 </head>
 <body>
 	<div id="box">
 		<h2>◎ 게시판 입력</h2>
-		<form name="boardForm">
+		<form name="boardForm" action="boardProcess.jsp" onsubmit="return writeCheck()" method="post">
 			<table>
 				<colgroup>
 					<col width="150px"/>
@@ -54,7 +64,7 @@
 			
 			<div class="btns">
 				<input type="submit" value="저장"/>
-				<input type="reset" value="취소"/>
+				<input type="reset" value="목록" onclick="location.href='boardList.jsp'"/>
 			</div>
 		</form>
 	</div>

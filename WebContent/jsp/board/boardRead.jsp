@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.sql.Connection" %>
+<%@ page import="java.sql.DriverManager" %>
+<%@ page import="java.sql.PreparedStatement"%>
+<%@ page import="java.sql.ResultSet"%>
+<%@ page import="java.sql.SQLException"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -29,6 +34,23 @@
 	}
 	
 </style>
+<%
+	String url="jdbc:oracle:thin:@220.76.203.39:1521:UCS";
+	String id="UCS_STUDY";
+	String pw="qazxsw";
+	
+	int seq=Integer.parseInt(request.getParameter("seq"));
+	
+	Class.forName("oracle.jdbc.driver.OracleDriver");
+	
+	Connection conn=DriverManager.getConnection(url, id, pw);
+	
+	String sql = "SELECT b.seq, b.title, u.user_nm, b.reg_date, b.contents FROM board b, cm_user u where b.seq=? and u.user_id=b.reg_id";
+	PreparedStatement pstmt=conn.prepareStatement(sql);
+	pstmt.setInt(1, seq);
+	ResultSet rs = pstmt.executeQuery();
+	
+%>
 </head>
 <body>
 	<div id="box">
@@ -41,27 +63,27 @@
 					<col width="150px"/>
 					<col width="*"/>
 				</colgroup>
-				
+				<%if(rs.next()){ %>
 				<tr>
 					<th>작성자</th>
-					<td>홍길동</td>
+					<td><%=rs.getString("user_nm") %></td>
 					<th>작성일</th>
-					<td>2017. 09. 13</td>
+					<td><%=rs.getDate("reg_date")%></td>
 				</tr>
 				
 				<tr>
 					<th>제목</th>
-					<td colspan="3" style="text-align: left;">게시판 목록을 작성하자</td>
+					<td colspan="3" style="text-align: left;"><%=rs.getString("title")%></td>
 				</tr>
 				
 				<tr>
 					<th>내용</th>
-					<td colspan="3" style="text-align: left; height: 300px; vertical-align: top;">게시판 상세를 입력</td>
-				</tr>
+					<td colspan="3" style="text-align: left; height: 300px; vertical-align: top;"><%=rs.getString("contents")%></td>
+				</tr><tr><%} %>
 			</table>
 			
 			<div class="btns">
-				<input type="button" value="뒤로"/>
+				<input type="button" value="뒤로" onclick="location.href='boardList.jsp'"/>
 			</div>
 		</form>
 	</div>

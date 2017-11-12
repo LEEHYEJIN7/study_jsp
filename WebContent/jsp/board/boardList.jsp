@@ -66,15 +66,31 @@
 	String url="jdbc:oracle:thin:@220.76.203.39:1521:UCS";
 	String id="UCS_STUDY";
 	String pw="qazxsw";
+	
+	String pageNumber=request.getParameter("pageNumber");
+	if(pageNumber==null) pageNumber="1";	
+	int currentPage=Integer.parseInt(pageNumber);
+	
+	int pageBlock=10; // 하단에 보여질 페이지 수 (1~10)
+	int boardSize=10; // 페이지에 보여지는 게시물 수 (10개)
+	int startRow=(currentPage-1)*boardSize+1;
+	int endRow=currentPage*boardSize;
 
 	Class.forName("oracle.jdbc.driver.OracleDriver");
 	
 	Connection conn=DriverManager.getConnection(url, id, pw);
 	
-	String sql = "SELECT * FROM BOARD ORDER BY seq DESC";
+	String sql = "SELECT * FROM (SELECT ROWNUM AS rnum, A.* FROM (SELECT * FROM BOARD ORDER BY SEQ DESC) A) b WHERE b.rnum >=? AND b.rnum <=?";
 	PreparedStatement pstmt=conn.prepareStatement(sql);
+	pstmt.setInt(1, startRow);
+	pstmt.setInt(2, endRow);
 	ResultSet rs = pstmt.executeQuery();
 	
+	String sql2="select count(*) from board";
+	pstmt=conn.prepareStatement(sql2);
+	ResultSet rs2=pstmt.executeQuery();
+	int count=0;
+	if(rs2.next()) count=rs2.getInt(1);	// 총 게시물 수
 %>
 </head>
 <body>
@@ -96,17 +112,10 @@
 					</div>
 					
 					<input type="submit" id="submitBtn" value="검색"/>
+					<input type="button" id="writeBtn" value="글쓰기" onclick="location.href='boardWrite.jsp'"/>
 			</form>
 		</div>
-		<%
-		while(rs.next()){
-
-			int seq= rs.getInt("seq");
-			String title = rs.getString("title");
-			String mod_id = rs.getString("mod_id");
-			String mod_date = rs.getString("mod_date");
 		
-		%>
 		<div class="list">
 			<table>
 				<colgroup>
@@ -121,32 +130,41 @@
 					<th>작성자</th>
 					<th>작성일</th>
 				</tr>
+		<%
+		while(rs.next()){
+
+			int seq= rs.getInt("seq");
+			String title = rs.getString("title");
+			String reg_id = rs.getString("reg_id");
+			String reg_date = rs.getString("reg_date");
+		
+		%>
 				<tr>
 					<td><%=seq %></td>
-					<td><%=title %></td>
-					<td><%=mod_id %></td>
-					<td><%=mod_date %></td>
-				</tr>				
+					<td><a href='boardRead.jsp?seq=<%=seq%>'><%=title %></a></td>
+					<td><%=reg_id %></td>
+					<td><%=reg_date %></td>
+				</tr>		
+			<%
+			}
+			%>		
 			</table>
 		</div>
+		
+		<div class="page">		
 		<%
-		}
+			int lastPage=(int)(count/boardSize)+1;
+			int startPage=((int)((currentPage-1)/pageBlock)*pageBlock)+1;	// 현재 페이지를 pageBlock으로 나누고(나머지 버림) pageBlock 곱하기 +1 한 것이 현재 페이지의 페이징 시작점
+			int endPage=startPage+pageBlock-1;
+			if(endPage>lastPage) endPage=lastPage; //endPage가 가장 마지막 페이지보다 클 때
 		%>
-		<div class="page">
-			<a href="#" class="paging"> << </a>
-			<a href="#" class="paging"> < </a>
-			<a href="#"> 1 </a>
-			<a href="#"> 2 </a>
-			<a href="#"> 3 </a>
-			<a href="#"> 4 </a>
-			<a href="#"> 5 </a>
-			<a href="#"> 6 </a>
-			<a href="#"> 7 </a>
-			<a href="#"> 8 </a>
-			<a href="#"> 9 </a>
-			<a href="#"> 10 </a>
-			<a href="#" class="paging"> > </a>
-			<a href="#" class="paging"> >> </a>
+			<a href="boardList.jsp?pageNumber=1" class="paging"> << </a>
+			<a href="boardList.jsp?pageNumber=<%=startPage-pageBlock %>" class="paging"> < </a>
+			<%for(int i=startPage; i<=endPage; i++){ %>
+				<a href="boardList.jsp?pageNumber=<%=i %>"><%=i %></a>
+			<%} %>		
+			<a href="boardList.jsp?pageNumber=<%=startPage+pageBlock %>" class="paging"> > </a>
+			<a href="boardList.jsp?pageNumber=<%=lastPage%>" class="paging"> >> </a>
 			
 		</div>
 	</div>
