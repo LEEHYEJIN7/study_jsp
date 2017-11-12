@@ -159,7 +159,8 @@
 				url="signIn.jsp";
 			}else{
 				request.setAttribute("user_id", userId);
-				msg="로그인 성공!";
+				session.setAttribute("user_id", userId);
+				msg="로그인 성공!";				
 				url="../board/boardList.jsp";
 			}
 			
