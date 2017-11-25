@@ -1,4 +1,4 @@
-package co.kr.ucs.Package;
+package co.kr.ucs.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class DBManager {
 	//DB연결
-		private static Connection getConnection(){
+		public static Connection getConnection(){
 			Connection conn=null;
 			
 			try{

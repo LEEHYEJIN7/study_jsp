@@ -62,6 +62,7 @@
 		border:1px solid black;
 	}
 </style>
+
 <%
 	String url="jdbc:oracle:thin:@220.76.203.39:1521:UCS";
 	String id="UCS_STUDY";
@@ -92,6 +93,7 @@
 	int count=0;
 	if(rs2.next()) count=rs2.getInt(1);	// 총 게시물 수
 %>
+
 </head>
 <body>
 	<div id="box">
