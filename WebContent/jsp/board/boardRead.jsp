@@ -1,10 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.sql.Connection" %>
-<%@ page import="java.sql.DriverManager" %>
-<%@ page import="java.sql.PreparedStatement"%>
-<%@ page import="java.sql.ResultSet"%>
-<%@ page import="java.sql.SQLException"%>
+<%@ page import="co.kr.ucs.service.BoardService"%>
+<%@ page import="co.kr.ucs.bean.BoardBean"%>
+<%@ page import="java.util.List"%>
+<%@ page import="java.util.Date"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -35,20 +34,14 @@
 	
 </style>
 <%
-	String url="jdbc:oracle:thin:@220.76.203.39:1521:UCS";
-	String id="UCS_STUDY";
-	String pw="qazxsw";
+	String url="jdbc:oracle:thin:localhost:1521:orcl";
+	String id="hj";
+	String pw="hyejin";
 	
 	int seq=Integer.parseInt(request.getParameter("seq"));
 	
-	Class.forName("oracle.jdbc.driver.OracleDriver");
-	
-	Connection conn=DriverManager.getConnection(url, id, pw);
-	
-	String sql = "SELECT b.seq, b.title, u.user_nm, b.reg_date, b.contents FROM board b, cm_user u where b.seq=? and u.user_id=b.reg_id";
-	PreparedStatement pstmt=conn.prepareStatement(sql);
-	pstmt.setInt(1, seq);
-	ResultSet rs = pstmt.executeQuery();
+	BoardService board=new BoardService();
+	List<BoardBean> list=board.selectContents(seq);
 	
 %>
 </head>
@@ -63,22 +56,23 @@
 					<col width="150px"/>
 					<col width="*"/>
 				</colgroup>
-				<%if(rs.next()){ %>
+				<%if(list!=null){ 
+				BoardBean boardtext=list.get(0);%>
 				<tr>
 					<th>작성자</th>
-					<td><%=rs.getString("user_nm") %></td>
+					<td><%=boardtext.getRegId() %></td>
 					<th>작성일</th>
-					<td><%=rs.getDate("reg_date")%></td>
+					<td><%=boardtext.getRegDate()%></td>
 				</tr>
 				
 				<tr>
 					<th>제목</th>
-					<td colspan="3" style="text-align: left;"><%=rs.getString("title")%></td>
+					<td colspan="3" style="text-align: left;"><%=boardtext.getTitle()%></td>
 				</tr>
 				
 				<tr>
 					<th>내용</th>
-					<td colspan="3" style="text-align: left; height: 300px; vertical-align: top;"><%=rs.getString("contents")%></td>
+					<td colspan="3" style="text-align: left; height: 300px; vertical-align: top;"><%=boardtext.getContents()%></td>
 				</tr><tr><%} %>
 			</table>
 			

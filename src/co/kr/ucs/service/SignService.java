@@ -39,7 +39,7 @@ public class SignService {
 		PreparedStatement pstmt=null;
 		
 		try{
-			String sql="insert into CM_USER values (?,?,?,?)";
+			String sql="insert into CM_USER(user_id, user_pw, user_nm, email) values (?,?,?,?)";
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setString(1, id);
 			pstmt.setString(2, pw);
@@ -57,6 +57,7 @@ public class SignService {
 	
 	//로그인
 	public int signIn(String id, String pw){
+		System.out.println("*****SignService.signIn********" + id + ", " + pw);
 		int check=0;
 		Connection conn=DBManager.getConnection();
 		PreparedStatement pstmt=null;

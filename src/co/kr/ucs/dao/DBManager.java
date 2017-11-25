@@ -12,9 +12,12 @@ public class DBManager {
 			Connection conn=null;
 			
 			try{
-				String url="jdbc:oracle:thin:@220.76.203.39:1521:UCS";
+				/*String url="jdbc:oracle:thin:@220.76.203.39:1521:UCS";
 				String id="UCS_STUDY";
-				String pw="qazxsw";
+				String pw="qazxsw";*/
+				String url="jdbc:oracle:thin:localhose:1521:orcl";
+				String id="hj";
+				String pw="hyejin";
 				
 				Class.forName("oracle.jdbc.driver.OracleDriver");
 				conn=DriverManager.getConnection(url,id,pw);

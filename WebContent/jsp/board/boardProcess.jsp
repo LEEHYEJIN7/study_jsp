@@ -16,7 +16,13 @@
 	BoardService board=new BoardService();
 	
 	int check=board.insertText(title, userId, content);
-	
+	if(userId==""){
+		%>
+		alert("로그인 해주세요!");
+		location.href="../login/signIn.jsp";
+		return;
+		<%	
+	}
 	if(check>0){
 		%>
 		alert("글 등록 성공");
