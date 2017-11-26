@@ -74,7 +74,7 @@
 <body>
 	<div id="box">
 		<h2>로그인</h2>
-		<form name="loginForm" action="signProcess.jsp" onsubmit="return loginCheck()" method="post">			
+		<form name="loginForm" action="/study_jsp/sign/signIn" onsubmit="return loginCheck()" method="post">			
 			<div id="loginBox">
 					<input type="hidden" name="process" value="signin"/>
 					<div class="labelB"><label for="id">아이디*</label></div>

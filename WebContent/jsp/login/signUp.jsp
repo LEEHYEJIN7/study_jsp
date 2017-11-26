@@ -93,7 +93,7 @@
 <body>
 	<div id="box">
 		<h2>◎ 회원가입</h2>
-		<form name="loginForm" action="signProcess.jsp" onsubmit="return checkForm()" method="post">			
+		<form name="loginForm" action="/study_jsp/sign/signUp" onsubmit="return checkForm()" method="post">			
 			<div id="loginBox">
 					<input type="hidden" name="process" value="signup"/>
 					<div class="labelB"><label for="id">아이디*</label></div>

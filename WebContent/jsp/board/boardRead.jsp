@@ -34,15 +34,7 @@
 	
 </style>
 <%
-	String url="jdbc:oracle:thin:localhost:1521:orcl";
-	String id="hj";
-	String pw="hyejin";
-	
-	int seq=Integer.parseInt(request.getParameter("seq"));
-	
-	BoardService board=new BoardService();
-	List<BoardBean> list=board.selectContents(seq);
-	
+	BoardBean boardtext=(BoardBean)request.getAttribute("boardtext");	
 %>
 </head>
 <body>
@@ -56,8 +48,7 @@
 					<col width="150px"/>
 					<col width="*"/>
 				</colgroup>
-				<%if(list!=null){ 
-				BoardBean boardtext=list.get(0);%>
+				<%if(boardtext!=null){ %>
 				<tr>
 					<th>작성자</th>
 					<td><%=boardtext.getRegId() %></td>
@@ -77,7 +68,7 @@
 			</table>
 			
 			<div class="btns">
-				<input type="button" value="뒤로" onclick="location.href='boardList.jsp'"/>
+				<input type="button" value="뒤로" onclick="location.href='/study_jsp/board/boardList'"/>
 			</div>
 		</form>
 	</div>

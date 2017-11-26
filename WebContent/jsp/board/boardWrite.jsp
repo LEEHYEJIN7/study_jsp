@@ -46,7 +46,7 @@
 <body>
 	<div id="box">
 		<h2>◎ 게시판 입력</h2>
-		<form name="boardForm" action="boardProcess.jsp" onsubmit="return writeCheck()" method="post">
+		<form name="boardForm" action="/study_jsp/board/Write" onsubmit="return writeCheck()" method="post">
 			<table>
 				<colgroup>
 					<col width="150px"/>
