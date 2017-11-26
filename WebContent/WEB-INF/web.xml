@@ -8,5 +8,15 @@
     <welcome-file>default.html</welcome-file>
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
-  </welcome-file-list>
+  </welcome-file-list>  
+  
+	<servlet>
+	<servlet-name>sign</servlet-name>
+	<servlet-class>co.kr.ucs.controller.SignController</servlet-class>
+	</servlet>
+		
+	<servlet-mapping>
+	<servlet-name>sign</servlet-name>
+	<url-pattern>/sign/*</url-pattern>
+	</servlet-mapping>
 </web-app>
