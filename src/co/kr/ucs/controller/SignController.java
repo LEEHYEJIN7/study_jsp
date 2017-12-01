@@ -24,7 +24,6 @@ public class SignController extends HttpServlet{
 		req.setCharacterEncoding("UTF-8");
 		
 		String uri=req.getRequestURI();
-		String process=req.getParameter("process");
 		String userId=req.getParameter("userId");
 		String userPw=req.getParameter("userPw");
 		String userNm=req.getParameter("userNm");
@@ -81,5 +80,5 @@ public class SignController extends HttpServlet{
 		
 		dis.forward(req, resp);		
 	}
-	
+	 	
 }

@@ -1,6 +1,7 @@
 package co.kr.ucs.controller;
 
 import java.io.IOException;
+import java.sql.SQLTimeoutException;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -44,24 +45,40 @@ public class BoardController extends HttpServlet{
 				view="/jsp/login/signIn.jsp";
 				dis=req.getRequestDispatcher(view);
 			}else {
-				int check=service.insertText(title, userId, content);
-				if(check>0) {
-					msg="글이 작성되었습니다.";
-					view="/board/boardList";
-					dis=req.getRequestDispatcher(view);
+				int check;
+				try {
+					check = service.insertText(title, userId, content);
+					
+					if(check>0) {
+						msg="글이 작성되었습니다.";
+						view="/board/boardList";
+						dis=req.getRequestDispatcher(view);
+					}
+				} catch (SQLTimeoutException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
+				
 			}
 		}else if(uri.indexOf("/board/boardRead")>-1) {	// 글조회
 			int seq=Integer.parseInt(req.getParameter("seq"));
-			List<BoardBean> list=service.selectContents(seq);
-			if(list!=null) {
-				BoardBean bb=new BoardBean();
-				bb=list.get(0);
-				req.setAttribute("boardtext", bb);
+			List<BoardBean> list;
+			try {
+				list = service.selectContents(seq);
 				
-				view="/jsp/board/boardRead.jsp";
-				dis=req.getRequestDispatcher(view);
+				if(list!=null) {
+					BoardBean bb=new BoardBean();
+					bb=list.get(0);
+					req.setAttribute("boardtext", bb);
+					
+					view="/jsp/board/boardRead.jsp";
+					dis=req.getRequestDispatcher(view);
+				}
+			} catch (SQLTimeoutException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
+			
 		}else if(uri.indexOf("/board/boardList")>-1) {	// 목록 조회			
 			String pageNumber=req.getParameter("pageNumber");
 			String search=req.getParameter("search");
@@ -75,17 +92,25 @@ public class BoardController extends HttpServlet{
 			int startRow=(currentPage-1)*boardSize+1;
 			int endRow=currentPage*boardSize;	
 			
-			List<BoardBean> list=service.selectBoardList(startRow, endRow, search, searchInput);
-			int count=service.countBoard();
-			System.out.println("list size + " + list.size());
-			req.setAttribute("currentPage", currentPage);
-			req.setAttribute("pageBlock", pageBlock);
-			req.setAttribute("boardSize", boardSize);
-			req.setAttribute("list", list);
-			req.setAttribute("count", count);
+			List<BoardBean> list;
+			try {
+				list = service.selectBoardList(startRow, endRow, search, searchInput);
+				
+				int count=service.countBoard();
+				System.out.println("list size + " + list.size());
+				req.setAttribute("currentPage", currentPage);
+				req.setAttribute("pageBlock", pageBlock);
+				req.setAttribute("boardSize", boardSize);
+				req.setAttribute("list", list);
+				req.setAttribute("count", count);
+				
+				view="/jsp/board/boardList.jsp";
+				dis=req.getRequestDispatcher(view);
+			} catch (SQLTimeoutException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
-			view="/jsp/board/boardList.jsp";
-			dis=req.getRequestDispatcher(view);
 		}
 		
 		System.out.println(msg);
