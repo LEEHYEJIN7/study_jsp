@@ -21,11 +21,12 @@ public class SignService {
 	//아이디 중복체크
 	public int idCheck(String userId) throws SQLTimeoutException{
 		int check=0;
-		Connection conn=dbPool.getConnection();
+		Connection conn=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		
 		try{
+			conn=dbPool.getConnection();
 			String sql="select * from CM_USER where USER_ID=?";
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setString(1, userId);			
@@ -46,10 +47,11 @@ public class SignService {
 	
 	//회원가입
 	public void signUp(String id, String pw, String name, String email) throws SQLTimeoutException{
-		Connection conn=dbPool.getConnection();
+		Connection conn=null;
 		PreparedStatement pstmt=null;
 		
 		try{
+			conn=dbPool.getConnection();
 			String sql="insert into CM_USER(user_id, user_pw, user_nm, email) values (?,?,?,?)";
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setString(1, id);
@@ -71,11 +73,12 @@ public class SignService {
 	public int signIn(String id, String pw) throws SQLTimeoutException{
 		System.out.println("*****SignService.signIn********" + id + ", " + pw);
 		int check=0;
-		Connection conn=dbPool.getConnection();
+		Connection conn=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		
 		try{
+			conn=dbPool.getConnection();
 			String sql="select * from CM_USER where USER_ID=? and USER_PW=?";
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setString(1, id);		

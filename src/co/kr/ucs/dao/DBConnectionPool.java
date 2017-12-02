@@ -20,7 +20,7 @@ public class DBConnectionPool {
 	
 	
 	//ConnectionPool 정보 인자를 갖는 생성자
-	public DBConnectionPool(String url, String id, String pw, int intConns, int maxConns) {
+	public DBConnectionPool(String url, String id, String pw, int initConns, int maxConns) {
 		this.url=url;
 		this.id=id;
 		this.pw=pw;
